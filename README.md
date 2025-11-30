@@ -2,7 +2,7 @@
 영화/책 추천
 
 1. 프로젝트 소개
-이 프로젝트는 사용자가 선택한 장르, 분위기 등의 정보를 바탕으로 영화와 책을 추천해주는 Streamlit 웹 애플리케이션 **movie_book_recommender**입니다.
+- 이 프로젝트는 사용자가 선택한 장르, 분위기 등의 정보를 바탕으로 영화와 책을 추천해주는 Streamlit 웹 애플리케이션 **movie_book_recommender**입니다.
 사용자는 간단한 체크박스와 선택지를 통해 원하는 장르, 기분, 분위기 등을 선합니다.
 그에 맞는 영화 또는 책을 추천받고 간단한 줄거리를 확인할 수 있습니다.
 직관적인 인터페이스와 시각적 요소를 통해 사용자가 쉽고 빠르게 추천 결과를 확인할 수 있는 것이 특징입니다.
@@ -34,8 +34,8 @@
 
 
 4. 실행 방법
-Streamlit Cloud를 통해 배포되었습니다.
-실행링크  :   https://moviebookrecommender-bfsepgbjyqxp4nfxf4lgex.streamlit.app/
+- Streamlit Cloud를 통해 배포되었습니다.
+- 실행링크  :   https://moviebookrecommender-bfsepgbjyqxp4nfxf4lgex.streamlit.app/
 
 
 
@@ -47,7 +47,7 @@ Streamlit Cloud를 통해 배포되었습니다.
   
 
 6. 기타 참고사항 (알림 권한 필요, 브라우저 제한 등)
-없음
+- 없음
 
 
 
