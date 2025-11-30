@@ -65,6 +65,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+def card(title, description):
+    st.markdown(
+        f"""
+        <div class="card fadein">
+            <h4>{title}</h4>
+            <p>{description}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
 
 menu = st.sidebar.selectbox("메뉴 선택", ["영화 추천", "책 추천"])
 
