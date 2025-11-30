@@ -4,7 +4,7 @@ import random
 st.set_page_config(page_title="영화 & 책 추천 앱", page_icon="🎬📚", layout="centered")
 
 # =============================
-# 배경/버튼/카드
+# 배경/버튼/카드 
 # =============================
 st.markdown("""
     <style>
