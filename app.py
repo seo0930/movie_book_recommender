@@ -1,9 +1,70 @@
 import streamlit as st
 import random
 
-st.set_page_config(page_title="영화 & 책 추천 앱", page_icon="🎬")
+st.set_page_config(page_title="영화 & 책 추천 앱", page_icon="🎬📚", layout="centered")
 st.title("🎬📚 영화 & 책 추천 웹앱")
 st.write("간단한 질문에 답하면 나에게 맞는 콘텐츠를 추천받을 수 있어요!")
+
+st.markdown("""
+    <style>
+        /* 전체 배경 그라데이션 */
+        .main {
+            background: linear-gradient(135deg, #E3F2FD, #FFF9C4, #FCE4EC, #EDE7F6);
+            animation: bgmove 8s ease infinite alternate;
+        }
+
+        /* 배경 애니메이션 효과 */
+        @keyframes bgmove {
+            0% {background-position: 0% 50%;}
+            100% {background-position: 100% 50%;}
+        }
+
+        /* 카드 스타일 */
+        .card {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ffffff55;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+            backdrop-filter: blur(6px);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* 카드 hover 애니메이션 */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+        }
+
+        /* fade-in 애니메이션 */
+        .fadein {
+            animation: fadeIn 1s ease forwards;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* 버튼 스타일 */
+        .stButton>button {
+            background: #BA68C8;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: none;
+            font-size: 17px;
+            transition: 0.2s ease;
+        }
+
+        /* 버튼 hover */
+        .stButton>button:hover {
+            background: #AB47BC;
+            transform: scale(1.03);
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 
 menu = st.sidebar.selectbox("메뉴 선택", ["영화 추천", "책 추천"])
 
