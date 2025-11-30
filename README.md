@@ -44,6 +44,7 @@
 - Python : 로직 구현
 - Streamlit : 웹 인터페이스 구성, 사용자 선택 및 카드 UI 표시
 - GitHub + Streamlit Cloud : 코드 관리 및 웹 배포
+- chatGPT5 plus : 배포 방식 질문, UI/UX 관련 수정 요구
 
   
 
