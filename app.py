@@ -1,45 +1,43 @@
-import streamlit as st 
+import streamlit as st
 import random
 import requests
 
 st.set_page_config(page_title="영화 & 책 추천 앱", page_icon="🎬📚", layout="centered")
 
-# =============================
-#   TMDB API 설정
-# =============================
-TMDB_API_KEY = "5d9c84712f17fc5a3c50f4e16ca840d1"
+OMDB_KEY = "1a38fe88"
 
-def get_movie_poster(title):
-    """TMDB에서 영화 제목으로 포스터 URL 가져오기"""
-    url = f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={title}"
-    response = requests.get(url).json()
+# -------------------------------------------------
+# ⭐ OMDb 포스터 가져오기 함수
+# -------------------------------------------------
+def get_movie_poster(movie_name):
+    url = f"http://www.omdbapi.com/?apikey={OMDB_KEY}&t={movie_name}"
+    res = requests.get(url).json()
 
-    if response["results"]:
-        poster_path = response["results"][0].get("poster_path")
-        if poster_path:
-            return f"https://image.tmdb.org/t/p/w500{poster_path}"
-
-    return None  # 포스터 없을 때
-
+    if res.get("Response") == "True" and res.get("Poster") != "N/A":
+        return res["Poster"]
+    else:
+        return None
 
 # =============================
-#   🌈 CSS 스타일
+#    🌈 CSS 스타일(배경/버튼/카드)
 # =============================
 st.markdown("""
     <style>
+
         .main {
             background: linear-gradient(120deg, #E3F2FD, #FFF9C4, #FCE4EC, #EDE7F6, #E1F5FE);
             background-size: 500% 500%;
             animation: pastelMove 16s ease infinite;
         }
+
         @keyframes pastelMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        h1, h2, h3, h4, p, label { font-family: 'Pretendard', sans-serif; }
+
         .card {
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(255,255,255,0.55);
             backdrop-filter: blur(9px);
             padding: 20px;
             border-radius: 18px;
@@ -48,10 +46,12 @@ st.markdown("""
             opacity: 0;
             animation: pop 0.6s ease forwards;
         }
+
         @keyframes pop {
             0% { opacity: 0; transform: scale(0.92); }
             100% { opacity: 1; transform: scale(1); }
         }
+
         .stButton>button {
             background: linear-gradient(135deg, #FFB6C1, #CE93D8);
             color: white;
@@ -62,24 +62,19 @@ st.markdown("""
             font-weight: bold;
             transition: 0.25s ease;
         }
+
         .stButton>button:hover {
             transform: scale(1.07);
             box-shadow: 0 10px 18px rgba(0,0,0,0.15);
         }
+
     </style>
 """, unsafe_allow_html=True)
 
-
-# =============================
-#        헤더
-# =============================
 st.title("🎬📚 영화 & 책 추천 웹앱")
 st.subheader("✨ 간단한 취향 분석으로 나만의 콘텐츠를 추천해드려요!")
 
 
-# =============================
-#       카드 UI 함수
-# =============================
 def card(title, description):
     st.markdown(
         f"""
@@ -92,9 +87,6 @@ def card(title, description):
     )
 
 
-# =============================
-#     📖 줄거리(시놉시스)
-# =============================
 movie_info = {
     "어바웃 타임": "시간 여행 능력을 가진 청년이 사랑과 가족을 통해 인생의 소중함을 깨닫는 이야기.",
     "라라랜드": "꿈을 좇는 배우 지망생과 재즈 음악가의 사랑과 성장 이야기.",
@@ -125,10 +117,6 @@ book_info = {
     "미움받을 용기": "타인의 시선에서 벗어나 자신의 삶을 살아가는 방법에 대한 철학적 대화."
 }
 
-
-# =============================
-#   선택 옵션
-# =============================
 menu = st.sidebar.selectbox("메뉴 선택", ["영화 추천", "책 추천"])
 
 movies = {
@@ -158,49 +146,42 @@ book_moods = {
     "몰입감 있는 스토리가 좋아요": "빠져드는 스토리 중심의 책을 추천할게요!",
 }
 
-
-# =============================
-#        🎬 영화 추천
-# =============================
+# --------------------------------------
+# 🎬 영화 추천
+# --------------------------------------
 if menu == "영화 추천":
     st.header("🎬 영화 추천")
-    st.write("아래 질문에 답하면 취향에 맞는 영화를 알려드릴게요!")
 
     genre = st.radio("어떤 장르가 좋아요?", list(movies.keys()))
     mood = st.radio("오늘 기분은 어때요?", list(mood_bonus.keys()))
-    length = st.radio("선호하는 영화 길이는?", ["짧은 영화(110분 이하)", "보통", "긴 영화(140분 이상)"])
+    length = st.radio("선호하는 영화 길이는?", ["짧은 영화", "보통", "긴 영화"])
 
     if st.button("🎞 영화 추천 받기"):
         pick = random.choice(movies[genre])
+
         st.subheader("✨ 추천 결과")
-
-        # 포스터 가져오기
-        poster_url = get_movie_poster(pick)
-
         card("🎬 추천 영화", pick)
         card("📖 영화 줄거리", movie_info[pick])
         card("✔️ 추천 이유", mood_bonus[mood])
 
-        # 포스터 표시
-        if poster_url:
-            st.image(poster_url, width=250)
+        poster = get_movie_poster(pick)
+        if poster:
+            st.image(poster, width=300)
         else:
-            st.info("❗ 포스터 이미지를 불러올 수 없습니다.")
+            st.info("포스터를 찾을 수 없어요 😢")
 
-
-# =============================
-#           📚 책 추천
-# =============================
+# --------------------------------------
+# 📚 책 추천
+# --------------------------------------
 else:
     st.header("📚 책 추천")
-    st.write("질문에 답하면 오늘 당신에게 맞는 책을 찾아드릴게요!")
 
     book_type = st.radio("읽고 싶은 책 종류는?", list(books.keys()))
     mood_b = st.radio("오늘 독서 분위기는?", list(book_moods.keys()))
 
     if st.button("📖 책 추천 받기"):
         pick = random.choice(books[book_type])
-        st.subheader("✨ 추천 결과")
 
+        st.subheader("✨ 추천 결과")
         card("📘 추천 도서", pick)
         card("📖 책 줄거리", book_info[pick])
