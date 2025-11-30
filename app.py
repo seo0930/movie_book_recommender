@@ -11,7 +11,7 @@ st.markdown("""
 
     
         .main {
-            background: linear-gradient(120deg, #BBDEFB, #FFF176, #F48FB1, #B39DDB, #81D4FA);
+            background: linear-gradient(120deg, #B3E5FC, #E1F5FE, #B3E5FC);
             background-size: 500% 500%;
             animation: pastelMove 16s ease infinite;
         }
